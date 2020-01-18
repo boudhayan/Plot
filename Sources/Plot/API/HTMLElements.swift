@@ -271,10 +271,22 @@ public extension Node where Context: HTML.BodyContext {
         .element(named: "label", nodes: nodes)
     }
 
+    /// Add a `<main>` HTML element within the current context.
+    /// - parameter nodes: The element's attributes and child elements.
+    static func main(_ nodes: Node<HTML.BodyContext>...) -> Node {
+        .element(named: "main", nodes: nodes)
+    }
+
     /// Add a `<nav>` HTML element within the current context.
     /// - parameter nodes: The element's attributes and child elements.
     static func nav(_ nodes: Node<HTML.BodyContext>...) -> Node {
         .element(named: "nav", nodes: nodes)
+    }
+
+    /// Add a `<noscript>` HTML element within the current context.
+    /// - parameter nodes: The element's attributes and child elements.
+    static func noscript(_ nodes: Node<HTML.BodyContext>...) -> Node {
+        .element(named: "noscript", nodes: nodes)
     }
 
     /// Add an `<ol>` HTML element within the current context.
@@ -425,6 +437,12 @@ public extension Node where Context == HTML.FormContext {
     /// - parameter nodes: The element's attributes.
     static func input(_ attributes: Attribute<HTML.InputContext>...) -> Node {
         .selfClosedElement(named: "input", attributes: attributes)
+    }
+    
+    /// Add a `<textarea>` HTML element within the current context.
+    /// - parameter nodes: The element's attributes and nodes.
+    static func textarea(_ nodes: Node<HTML.TextAreaContext>...) -> Node {
+        .element(named: "textarea", nodes: nodes)
     }
 }
 

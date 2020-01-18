@@ -26,8 +26,8 @@ public extension Node {
     /// be created.
     /// - parameter optional: The optional value to unwrap.
     /// - parameter transform: The closure to use to transform the value into a node.
-    static func unwrap<T>(_ optional: T?, _ transform: (T) -> Node) -> Node {
-        optional.map(transform) ?? .empty
+    static func unwrap<T>(_ optional: T?, _ transform: (T) throws -> Node) rethrows -> Node {
+        try optional.map(transform) ?? .empty
     }
 
     /// Transform any sequence of values into a group of nodes, by applying a
@@ -35,7 +35,18 @@ public extension Node {
     /// - parameter sequence: The sequence to transform.
     /// - parameter transform: The closure to use to transform each element into a node.
     static func forEach<S: Sequence>(_ sequence: S,
-                                     _ transform: (S.Element) -> Node) -> Node {
-        .group(sequence.map(transform))
+                                     _ transform: (S.Element) throws -> Node) rethrows -> Node {
+        try .group(sequence.map(transform))
+    }
+}
+
+public extension Attribute {
+    /// Conditionally create a given attribute by unwrapping an optional, and then
+    /// applying a transform to it. If the optional is `nil`, then no attribute will
+    /// be created.
+    /// - parameter optional: The optional value to unwrap.
+    /// - parameter transform: The closure to use to transform the value into an attribute.
+    static func unwrap<T>(_ optional: T?, _ transform: (T) throws -> Self) rethrows -> Self {
+        try optional.map(transform) ?? .empty
     }
 }
